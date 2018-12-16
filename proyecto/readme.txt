@@ -1,6 +1,7 @@
 
 *Carpetas:
-  ->configuraciones: Contiene el fichero de configuración                      del sistema programado.
+  ->configuraciones: Contiene el fichero de configuración                      
+                     del sistema programado.
 
   ->flujos: Carpeta destino donde se ubican los ficheros
             con la información exportada de IPFIX.
