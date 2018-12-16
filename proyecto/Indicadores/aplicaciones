@@ -1,0 +1,61 @@
+#######################################################
+# Descripcion: Aplicaciones detectadas en el analisis #
+# Fecha: 2018100313                                   #
+#######################################################
+
+--> Total de aplicaciones:	24
+
+1	QUIC
+2	Unknown
+3	NetBIOS
+4	MDNS
+5	LLMNR
+6	DNS
+7	SSL
+8	SSL.Google
+9	DNS.GMail
+10	SSL.GMail
+11	DNS.GoogleServices
+12	QUIC.GoogleServices
+13	DNS.GoogleDrive
+14	QUIC.GoogleDrive
+15	SSDP
+16	QUIC.GoogleDocs
+17	VMware
+18	QUIC.Google
+19	SSL_No_Cert
+20	DNS.Google
+21	HTTP
+22	SSL.WhatsApp
+23	DNS.Office365
+24	SSL.Office365
+
+--> Analisis de aplicaciones con IP origen:
+
+------------------------------
+IP Origen:	1.1.1.1
+SSL_No_Cert            39
+QUIC                   19
+SSL                    12
+VMware                  7
+LLMNR                   4
+Unknown                 4
+DNS                     3
+QUIC.Google             3
+SSL.GMail               2
+SSL.WhatsApp            2
+SSL.Google              2
+SSL.Office365           2
+QUIC.GoogleServices     1
+MDNS                    1
+DNS.Google              1
+DNS.GoogleServices      1
+NetBIOS                 1
+DNS.GoogleDrive         1
+QUIC.GoogleDrive        1
+HTTP                    1
+DNS.GMail               1
+SSDP                    1
+DNS.Office365           1
+QUIC.GoogleDocs         1
+------------------------------
