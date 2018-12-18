@@ -8,6 +8,8 @@
 
   ->Indicadores: Carpeta que contiene los ficheros de los
                  indicadores.
+  ->Instalacion: Carpeta que contiene los ficheros
+                 de instalación del proyecto.
 *Ficheros:
  | -> ipcalc.py: Librería utilizada para el cálculo de
  |               subredes IP.
