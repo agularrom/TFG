@@ -410,33 +410,33 @@ def mostrarAplicaciones(df,ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		Aplicaciones = df.L7_PROTO_NAME.unique()
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/aplicaciones','wr')
-		file.write('#######################################################\n')
-		file.write('# Descripcion: Aplicaciones detectadas en el analisis #\n')
-		file.write('# Fecha: '+ fecha +'                                   #\n')	
-		file.write('#######################################################\n\n')
-		file.write('--> Total de aplicaciones:\t'+ str(len(Aplicaciones)) +'\n\n')
-		i=1
-		for app in Aplicaciones:
-			file.write(str(i) + '\t' + app + '\n')
-			i+=1
-		file.write('\n--> Analisis de aplicaciones con IP origen:\n')
-		for ip in df.IPV4_SRC_ADDR.unique():
-			file.write('\n------------------------------\n')
-			file.write('IP Origen:\t' + ip + '\n')
-			file.write(str(df[df['IPV4_SRC_ADDR'] == ip]['L7_PROTO_NAME'].value_counts()))
-			file.write('\n------------------------------')
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/aplicaciones')
-		os.system('sed -i "/\.\./d" Indicadores/aplicaciones')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/aplicaciones'
-		ficheroIpAplicaciones = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'aplicaciones' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'aplicaciones', ipFiltrado, 'aplicaciones') 
-		tratamientoIP(ipFiltrado,fichero,ficheroIpAplicaciones)
-		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'aplicaciones', 'aplicaciones', 'aplicacion')
+
+	Aplicaciones = df.L7_PROTO_NAME.unique()
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/aplicaciones','wr')
+	file.write('#######################################################\n')
+	file.write('# Descripcion: Aplicaciones detectadas en el analisis #\n')
+	file.write('# Fecha: '+ fecha +'                                   #\n')	
+	file.write('#######################################################\n\n')
+	file.write('--> Total de aplicaciones:\t'+ str(len(Aplicaciones)) +'\n\n')
+	i=1
+	for app in Aplicaciones:
+		file.write(str(i) + '\t' + app + '\n')
+		i+=1
+	file.write('\n--> Analisis de aplicaciones con IP origen:\n')
+	for ip in df.IPV4_SRC_ADDR.unique():
+		file.write('\n------------------------------\n')
+		file.write('IP Origen:\t' + ip + '\n')
+		file.write(str(df[df['IPV4_SRC_ADDR'] == ip]['L7_PROTO_NAME'].value_counts()))
+		file.write('\n------------------------------')
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/aplicaciones')
+	os.system('sed -i "/\.\./d" Indicadores/aplicaciones')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/aplicaciones'
+	ficheroIpAplicaciones = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'aplicaciones' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'aplicaciones', ipFiltrado, 'aplicaciones') 
+	tratamientoIP(ipFiltrado,fichero,ficheroIpAplicaciones)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'aplicaciones', 'aplicaciones', 'aplicacion')
 
 def mostrarDataset(df,ipFiltrado):
 	df.to_csv('/home/anonymus/Escritorio/tfg/Indicadores/dataset', sep='\t', encoding='utf-8')
@@ -455,28 +455,31 @@ def mostrarIpPuertosDestino(df,ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if (ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/PuertosDestino','wr')
-		file.write('###########################################################\n')
-		file.write('# Descripcion: Puertos destinos detectados en el analisis #\n')
-		file.write('# Fecha: '+ fecha +'                                       #\n')
-		file.write('###########################################################\n\n')
-		file.write('--> Puertos destino con el numero de veces abiertos: \n\n')
-		file.write(str(df.L4_DST_PORT.value_counts()) + '\n\n --> IP origen y puerto destino con el numero de veces abierto')
-		for ip in df.IPV4_SRC_ADDR.unique():
-			file.write('\n------------------------------')	
-			file.write('\nIP Origen:\t' + ip + '\n')
-			file.write(str(df[df['IPV4_SRC_ADDR'] == ip]['L4_DST_PORT'].value_counts()))
-			file.write('\n------------------------------')
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/PuertosDestino')
-		os.system('sed -i "/\.\./d" Indicadores/PuertosDestino')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/PuertosDestino'
-		ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosDestino' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosDestino', ipFiltrado, 'PuertosDestino') 
-		tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
-		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'PuertosDestino', 'puertos_destino', 'puerto')
+
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/PuertosDestino','wr')
+	file.write('###########################################################\n')
+	file.write('# Descripcion: Puertos destinos detectados en el analisis #\n')
+	file.write('# Fecha: '+ fecha +'                                       #\n')
+	file.write('###########################################################\n\n')
+	file.write('--> Puertos destino con el numero de veces abiertos: \n\n')
+	file.write(str(df.L4_SRC_PORT.value_counts()) + '\n\n --> IP destino numero de puertos abiertos')
+	for ip in df.IPV4_SRC_ADDR.unique():
+		df2 = df[df.IPV4_SRC_ADDR == ip]
+		puertos = df2.L4_SRC_PORT.unique()
+		num_puertos = len(puertos)
+		file.write('\n------------------------------')	
+		file.write('\nIP Origen:\t' + ip + '\n')
+		file.write('PUERTOS' + '     ' + str(num_puertos))
+		file.write('\n------------------------------')
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/PuertosDestino')
+	os.system('sed -i "/\.\./d" Indicadores/PuertosDestino')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/PuertosDestino'
+	ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosDestino' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosDestino', ipFiltrado, 'PuertosDestino') 
+	tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'PuertosDestino', 'puertos_destino', 'puerto')
 
 def mostrarIpPuertosOrigen(df,ipFiltrado):
 	"""
@@ -492,28 +495,31 @@ def mostrarIpPuertosOrigen(df,ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/PuertosOrigen','wr')
-		file.write('#########################################################\n')
-		file.write('# Descripcion: Puertos origen detectados en el analisis #\n')
-		file.write('# Fecha: '+ fecha +'                                     #\n')	
-		file.write('#########################################################\n\n')
-		file.write('--> Puertos origen con el numero de veces abiertos: \n\n')
-		file.write(str(df.L4_SRC_PORT.value_counts()) + '\n\n --> IP origen y puerto origen con el numero de veces abierto')
-		for ip in df.IPV4_SRC_ADDR.unique():
-			file.write('\n------------------------------')	
-			file.write('\nIP Origen:\t' + ip + '\n')
-			file.write(str(df[df['IPV4_SRC_ADDR'] == ip]['L4_SRC_PORT'].value_counts()))
-			file.write('\n------------------------------')
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/PuertosOrigen')
-		os.system('sed -i "/\.\./d" Indicadores/PuertosOrigen')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/PuertosOrigen'
-		ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosOrigen' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosOrigen', ipFiltrado, 'PuertosOrigen')
-		tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
-		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'PuertosOrigen', 'puertos_origen', 'puerto')
+
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/PuertosOrigen','wr')
+	file.write('#########################################################\n')
+	file.write('# Descripcion: Puertos origen detectados en el analisis #\n')
+	file.write('# Fecha: '+ fecha +'                                     #\n')	
+	file.write('#########################################################\n\n')
+	file.write('--> Puertos origen con el numero de veces abiertos: \n\n')
+	file.write(str(df.L4_SRC_PORT.value_counts()) + '\n\n --> IP origen numero de puertos abiertos')
+	for ip in df.IPV4_SRC_ADDR.unique():
+		df2 = df[df.IPV4_SRC_ADDR == ip]
+		puertos = df2.L4_SRC_PORT.unique()
+		num_puertos = len(puertos)
+		file.write('\n------------------------------')	
+		file.write('\nIP Origen:\t' + ip + '\n')
+		file.write('PUERTOS' + '     ' + str(num_puertos))
+		file.write('\n------------------------------')
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/PuertosOrigen')
+	os.system('sed -i "/\.\./d" Indicadores/PuertosOrigen')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/PuertosOrigen'
+	ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosOrigen' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'PuertosOrigen', ipFiltrado, 'PuertosOrigen')
+	tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'PuertosOrigen', 'puertos_origen', 'puerto')
 
 def mostrarIPoIPd(df,ipFiltrado):
 	"""
@@ -529,26 +535,26 @@ def mostrarIPoIPd(df,ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/IPorigen-destino','wr')
-		file.write('#########################################################\n')
-		file.write('# Descripcion: Relacion de IP origen con IP destino #\n')
-		file.write('# Fecha: '+ fecha +'                                   #\n')	
-		file.write('#########################################################\n\n')
-		for ip in df.IPV4_SRC_ADDR.unique():
-			file.write('\n------------------------------')	
-			file.write('\nIP Origen:\t' + ip + '\n')
-			file.write(str(df[df['IPV4_SRC_ADDR'] == ip]['IPV4_DST_ADDR'].value_counts()))
-			file.write('\n------------------------------')
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/IPorigen-destino')
-		os.system('sed -i "/\.\./d" Indicadores/IPorigen-destino')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/IPorigen-destino'
-		ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'IPorigen-destino' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'IPorigen-destino', ipFiltrado, 'IPorigen-destino')
-		tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
-		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'IPorigen-destino', 'relacion_ip', 'ip_destino')
+
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/IPorigen-destino','wr')
+	file.write('#########################################################\n')
+	file.write('# Descripcion: Relacion de IP origen con IP destino #\n')
+	file.write('# Fecha: '+ fecha +'                                   #\n')	
+	file.write('#########################################################\n\n')
+	for ip in df.IPV4_SRC_ADDR.unique():
+		file.write('\n------------------------------')	
+		file.write('\nIP Origen:\t' + ip + '\n')
+		file.write(str(df[df['IPV4_SRC_ADDR'] == ip]['IPV4_DST_ADDR'].value_counts()))
+		file.write('\n------------------------------')
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/IPorigen-destino')
+	os.system('sed -i "/\.\./d" Indicadores/IPorigen-destino')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/IPorigen-destino'
+	ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'IPorigen-destino' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'IPorigen-destino', ipFiltrado, 'IPorigen-destino')
+	tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'IPorigen-destino', 'relacion_ip', 'ip_destino')
 
 def mostrarIPdIPo(df,ipFiltrado):
 	"""
@@ -564,25 +570,25 @@ def mostrarIPdIPo(df,ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/IPdestino-origen','wr')
-		file.write('#########################################################\n')
-		file.write('# Descripcion: Relacion de IP destino con IP origen     #\n')
-		file.write('# Fecha: '+ fecha +'                                     #\n')	
-		file.write('#########################################################\n\n')
-		for ip in df.IPV4_DST_ADDR.unique():
-			file.write('\n------------------------------')	
-			file.write('\nIP Destino:\t' + ip + '\n')
-			file.write(str(df[df['IPV4_DST_ADDR'] == ip]['IPV4_SRC_ADDR'].value_counts()))
-			file.write('\n------------------------------')
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/IPdestino-origen')
-		os.system('sed -i "/\.\./d" Indicadores/IPdestino-origen')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/IPdestino-origen'
-		ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'IPdestino-origen' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'IPdestino-origen', ipFiltrado, 'IPdestino-origen')
-		tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
+
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/IPdestino-origen','wr')
+	file.write('#########################################################\n')
+	file.write('# Descripcion: Relacion de IP destino con IP origen     #\n')
+	file.write('# Fecha: '+ fecha +'                                     #\n')	
+	file.write('#########################################################\n\n')
+	for ip in df.IPV4_DST_ADDR.unique():
+		file.write('\n------------------------------')	
+		file.write('\nIP Destino:\t' + ip + '\n')
+		file.write(str(df[df['IPV4_DST_ADDR'] == ip]['IPV4_SRC_ADDR'].value_counts()))
+		file.write('\n------------------------------')
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/IPdestino-origen')
+	os.system('sed -i "/\.\./d" Indicadores/IPdestino-origen')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/IPdestino-origen'
+	ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'IPdestino-origen' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'IPdestino-origen', ipFiltrado, 'IPdestino-origen')
+	tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
 
 def mostrarDestinoICMP(df,ipFiltrado):
 	"""
@@ -598,25 +604,25 @@ def mostrarDestinoICMP(df,ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/ICMP-Destino','wr')
-		file.write('################################################################\n')
-		file.write('# Descripcion: ICMPs con IPs origen detectados en el analisis #\n')
-		file.write('# Fecha: '+ fecha +'                                            #\n')	
-		file.write('################################################################\n\n')
-		file.write('\n--> IP origen con ICMP:\n')
-		file.write('\n------------------------------\n')
-		file.write(str(df['IPV4_SRC_ADDR'][df['L7_PROTO_NAME']=='ICMP'].value_counts()))
-		file.write('\n------------------------------')
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/ICMP-Destino')
-		os.system('sed -i "/\.\./d" Indicadores/ICMP-Destino')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/ICMP-Destino'
-		ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'ICMP-Destino' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'ICMP-Destino', ipFiltrado, 'ICMP-Destino')
-		tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
- 		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'ICMP-Destino', 'icmp_destino', 'ip_destino')
+
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/ICMP-Destino','wr')
+	file.write('################################################################\n')
+	file.write('# Descripcion: ICMPs con IPs origen detectados en el analisis #\n')
+	file.write('# Fecha: '+ fecha +'                                            #\n')	
+	file.write('################################################################\n\n')
+	file.write('\n--> IP origen con ICMP:\n')
+	file.write('\n------------------------------\n')
+	file.write(str(df['IPV4_SRC_ADDR'][df['L7_PROTO_NAME']=='ICMP'].value_counts()))
+	file.write('\n------------------------------')
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/ICMP-Destino')
+	os.system('sed -i "/\.\./d" Indicadores/ICMP-Destino')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/ICMP-Destino'
+	ficheroIpPuertosOrigen = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'ICMP-Destino' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'ICMP-Destino', ipFiltrado, 'ICMP-Destino')
+	tratamientoIP(ipFiltrado,fichero,ficheroIpPuertosOrigen)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'ICMP-Destino', 'icmp_destino', 'ip_destino')
 
 def mostrarNumIpDistintas(df, ipFiltrado):
 	"""
@@ -632,31 +638,31 @@ def mostrarNumIpDistintas(df, ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/Numero-IP','wr')
-		file.write('################################################################\n')
-		file.write('# Descripcion: Numero de IP distintas #\n')
-		file.write('# Fecha: '+ fecha +'                                            #\n')	
-		file.write('################################################################\n\n')
 
-		for ip in df.IPV4_SRC_ADDR.unique():
-			df2 = df[df.IPV4_SRC_ADDR == ip]
-			IPs_destino = df2.IPV4_DST_ADDR.unique()
-			num_IPs = len(IPs_destino)
-			file.write('\n------------------------------\n')
-			file.write('IP Origen:\t' + ip + '\n')
-			file.write('DISTINTAS' + '     ' + str(num_IPs))
-			file.write('\n------------------------------')
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/Numero-IP','wr')
+	file.write('################################################################\n')
+	file.write('# Descripcion: Numero de IP distintas #\n')
+	file.write('# Fecha: '+ fecha +'                                            #\n')	
+	file.write('################################################################\n\n')
 
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/Numero-IP')
-		os.system('sed -i "/\.\./d" Indicadores/Numero-IP')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/Numero-IP'
-		ficheroNumIP = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-IP' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-IP', ipFiltrado, 'Numero-IP')
-		tratamientoIP(ipFiltrado,fichero,ficheroNumIP)
- 		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'Numero-IP', 'num_ip', 'ip_aux')
+	for ip in df.IPV4_SRC_ADDR.unique():
+		df2 = df[df.IPV4_SRC_ADDR == ip]
+		IPs_destino = df2.IPV4_DST_ADDR.unique()
+		num_IPs = len(IPs_destino)
+		file.write('\n------------------------------\n')
+		file.write('IP Origen:\t' + ip + '\n')
+		file.write('DISTINTAS' + '     ' + str(num_IPs))
+		file.write('\n------------------------------')
+
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/Numero-IP')
+	os.system('sed -i "/\.\./d" Indicadores/Numero-IP')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/Numero-IP'
+	ficheroNumIP = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-IP' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-IP', ipFiltrado, 'Numero-IP')
+	tratamientoIP(ipFiltrado,fichero,ficheroNumIP)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'Numero-IP', 'num_ip', 'ip_aux')
 
 def mostrarNumApp(df, ipFiltrado):
 	"""
@@ -672,31 +678,31 @@ def mostrarNumApp(df, ipFiltrado):
 		    ipFiltrado --	Direccion IP asociada al indicador
 
 	"""
-	if(ipFiltrado == 'all'):
-		file = open('/home/anonymus/Escritorio/tfg/Indicadores/Numero-APP','wr')
-		file.write('################################################################\n')
-		file.write('# Descripcion: Numero de APLICACIONES distintas #\n')
-		file.write('# Fecha: '+ fecha +'                                            #\n')	
-		file.write('################################################################\n\n')
 
-		for ip in df.IPV4_SRC_ADDR.unique():
-			df2 = df[df.IPV4_SRC_ADDR == ip]
-			aplicaciones = df2.L7_PROTO_NAME.unique()
-			num_app = len(aplicaciones)
-			file.write('\n------------------------------\n')
-			file.write('IP Origen:\t' + ip + '\n')
-			file.write('APLICACIONES' + '     ' + str(num_app))
-			file.write('\n------------------------------')
+	file = open('/home/anonymus/Escritorio/tfg/Indicadores/Numero-APP','wr')
+	file.write('################################################################\n')
+	file.write('# Descripcion: Numero de APLICACIONES distintas #\n')
+	file.write('# Fecha: '+ fecha +'                                            #\n')	
+	file.write('################################################################\n\n')
 
-		file.close()
-		os.system('sed -i "/dtype:/d" Indicadores/Numero-APP')
-		os.system('sed -i "/\.\./d" Indicadores/Numero-APP')
-	else:
-		fichero = '/home/anonymus/Escritorio/tfg/Indicadores/Numero-APP'
-		ficheroNumApp = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-APP' + '/' + fecha
-		crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-APP', ipFiltrado, 'Numero-APP')
-		tratamientoIP(ipFiltrado,fichero,ficheroNumApp)
- 		insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'Numero-APP', 'num_app', 'aplicacion')
+	for ip in df.IPV4_SRC_ADDR.unique():
+		df2 = df[df.IPV4_SRC_ADDR == ip]
+		aplicaciones = df2.L7_PROTO_NAME.unique()
+		num_app = len(aplicaciones)
+		file.write('\n------------------------------\n')
+		file.write('IP Origen:\t' + ip + '\n')
+		file.write('APLICACIONES' + '     ' + str(num_app))
+		file.write('\n------------------------------')
+
+	file.close()
+	os.system('sed -i "/dtype:/d" Indicadores/Numero-APP')
+	os.system('sed -i "/\.\./d" Indicadores/Numero-APP')
+
+	fichero = '/home/anonymus/Escritorio/tfg/Indicadores/Numero-APP'
+	ficheroNumApp = '/home/anonymus/Escritorio/tfg/Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-APP' + '/' + fecha
+	crearCarpetaIp('Indicadores/IP/' + ipFiltrado + '/'+ 'Numero-APP', ipFiltrado, 'Numero-APP')
+	tratamientoIP(ipFiltrado,fichero,ficheroNumApp)
+	insertarBaseDatosIndicadores('/home/anonymus/Escritorio/tfg/Indicadores/IP/'+ ipFiltrado + '/'+ 'Numero-APP', 'num_app', 'aplicacion')
 
 def limpiarbaseDatos():
 	"""
@@ -718,18 +724,20 @@ def limpiarbaseDatos():
 	cnx.commit()
 	cnx.close()
 
-ipFiltrado = ['all', '1.1.1.1']
-
 # Lectura del fichero en bruto de IPFIX
 ficheroFlujos = sys.argv[1]
 df = pd.read_csv(ficheroFlujos)
 
-# Conversion de todas las IP internas a la IP 1.1.1.1
-df['IPV4_SRC_ADDR'][df['IPV4_SRC_ADDR'].isin(ipc.Network(network))] = '1.1.1.1'
+#Comprobacion de rango de subred para cada IP
+lista_ip_filtrado = []
+for ip in df['IPV4_SRC_ADDR'].unique():
+	if ip in ipc.Network(network):
+		lista_ip_filtrado += [ip]
 
-# Conversion de todas las IP externas a la IP 2.2.2.2
-df['IPV4_DST_ADDR'][df['IPV4_DST_ADDR'].isin(ipc.Network(network))] = '2.2.2.2'
-df = df[(df.IPV4_SRC_ADDR == '1.1.1.1') | (df.IPV4_DST_ADDR == '2.2.2.2')]
+if lista_ip_filtrado:
+	# Identificacion de todas las IP internas a la IP 1.1.1.1 en el campo L7_PROTO
+	df['L7_PROTO'][df['IPV4_SRC_ADDR'].isin(lista_ip_filtrado)] = '1.1.1.1'
+	df = df[(df.L7_PROTO == '1.1.1.1')]
 
 # Obtencion de la fecha inicio de IPFIX
 vacio = True
@@ -750,15 +758,15 @@ if vacio == False:
 			limpiarbaseDatos()
 			print 'Limpieza Base de datos OK'
 
-		for ipFiltrado_aux in ipFiltrado:
-			mostrarIpPuertosOrigen(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarIpPuertosDestino(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarAplicaciones(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarIPoIPd(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarIPdIPo(df,ipFiltrado_aux)
-			mostrarDestinoICMP(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarNumIpDistintas(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarNumApp(df[df.IPV4_SRC_ADDR == '1.1.1.1'], ipFiltrado_aux)
-			mostrarDataset(df,ipFiltrado_aux)
+		for ipFiltrado_aux in lista_ip_filtrado:
+			mostrarIpPuertosOrigen(df, ipFiltrado_aux)
+			mostrarIpPuertosDestino(df, ipFiltrado_aux)
+			mostrarAplicaciones(df, ipFiltrado_aux)
+			mostrarIPoIPd(df, ipFiltrado_aux)
+			mostrarIPdIPo(df, ipFiltrado_aux)
+			mostrarDestinoICMP(df, ipFiltrado_aux)
+			mostrarNumIpDistintas(df, ipFiltrado_aux)
+			mostrarNumApp(df, ipFiltrado_aux)
+			mostrarDataset(df, ipFiltrado_aux)
 	else:
 		print 'DIA FESTIVO'
