@@ -742,7 +742,7 @@ if lista_ip_filtrado:
 # Obtencion de la fecha inicio de IPFIX
 vacio = True
 if len(df) > 0:
-	inicio = df.FLOW_START_MILLISECONDS[0]
+	inicio = df.FLOW_START_MILLISECONDS.unique()[0]
 	vacio = False
 if fecha == 'AUTO':
 	fecha = calculaFecha(inicio)
